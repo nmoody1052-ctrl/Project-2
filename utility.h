@@ -1,4 +1,4 @@
-//Utility functions
+//Utility functions declarations for strings, comparing, uppercase, lowercase, and triming whitespace - Nathan Moody
 #ifndef UTILITY_H
 #define UTILITY_H
 #include <string>
@@ -15,7 +15,7 @@ std::string toUpper(const std::string& s);
 std::string toLower(const std::string& s);
 //End
 
-//equal(checks if strings are equal if we ignore case
+//checkEqual (checks if strings are equal {ignores case})
 bool checkEqual(const std::string& a, const std::string& b);
 //End
 

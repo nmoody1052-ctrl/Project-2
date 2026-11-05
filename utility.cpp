@@ -1,15 +1,20 @@
-//Utility functions 
+//Utility functions definitions for strings, comparing, uppercase, lowercase, and triming whitespace - Nathan Moody
 #include <string>
 #include <cctype>
 #include "utility.h"
 using namespace std;
-    //Trim (Trims whitespace off of a string)
-    string trim(const string& s){
-        
+    //trim (removes whitespace {space, tab, \r, \n})
+    string trim(const string& s) {
+        size_t first = s.find_first_not_of(" \t\r\n");
+        if (first == string::npos) {
+            return "";
+        }
+        size_t last = s.find_last_not_of(" \t\r\n");
+        return s.substr(first, last - first + 1);
     }
     //End
 
-    // toUpper: returns an uppercase copy of s
+    //toUpper: returns an uppercase copy of s
     string toUpper(const string& s) {
         string result;
         for (size_t i = 0; i < s.length(); i++) {
@@ -29,7 +34,7 @@ using namespace std;
     }
     //End
 
-    //equal(checks if strings are equal if we ignore case
+    //checkEqual (checks if strings are equal {ignores case})
     bool checkEqual(const string& a, const string& b){
         return toLower(a) == toLower(b);
     }
