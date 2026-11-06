@@ -6,7 +6,7 @@
 #include <vector>
 
 //loadBuildings(loads buildings by name from file into a vector)
-void loadBuildings(std::vector<std::string> b, const std::string& file);
+void loadBuildings(std::vector<std::string>& b, const std::string& file);
 //End
 
 #endif 
