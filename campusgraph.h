@@ -1,8 +1,16 @@
-// CampusGraph.h - Campus graph (GRAPH-1..6, BFS-1..5)
+// CampusGraph.h - Campus graph (GRAPH-1..6, BFS-1..5, Final connectivity report)
+// DESIGN CHOICE (GRAPH-2): ADJACENCY LIST.
+//   names[i]  = building name (index i = insertion order)
+//   adj[i]    = vector of neighbor indices, in neighbor insertion order
+//   lookup    = hash map  lowercase(trimmed name) -> index   (O(1) name matching, GRAPH-6)
+// Walkways are undirected and unweighted: addConnection(a,b) stores b in adj[a]
+// AND a in adj[b]. The same structure is used by display, statistics,
+// BFS reachability, shortest path and the connectivity report (GRAPH-5).
 #ifndef CAMPUSGRAPH_H
 #define CAMPUSGRAPH_H
 #include <string>
 #include <vector>
+#include <unordered_map>
 
 class CampusGraph {
 public:
@@ -21,6 +29,10 @@ public:
 
     // GRAPH-6: case-insensitive, trimmed, internal spaces preserved. Returns -1 if not found.
     int findIndex(const std::string& name) const;
+    bool hasBuilding(const std::string& name) const;
+    // Official spelling of a building as stored (e.g. "library" -> "Library"); "" if unknown.
+    // Handy for the facility loader.
+    std::string canonicalName(const std::string& name) const;
 
     int buildingCount() const;
     int connectionCount() const;              // each undirected edge counted once
@@ -39,10 +51,18 @@ public:
     // BFS-4/5 (Final): fewest-connection path between two buildings
     void shortestPath(const std::string& startName, const std::string& destName) const;
 
+    // Final: connectivity report = totals, highest degree (with ties), isolated buildings,
+    // number of connected components
+    void connectivityReport() const;
+
 private:
     std::vector<std::string> names;
     std::vector<std::vector<int> > adj;
+    std::unordered_map<std::string, int> lookup;
     int edgeCount;
+
+    // Runs BFS from start. dist[i] == -1 means "not reached". Fills visit order.
+    void runBfs(int start, std::vector<int>& dist, std::vector<int>& prev, std::vector<int>& order) const;
 };
 
 // Menu helpers: prompt the user, then call the function above.
