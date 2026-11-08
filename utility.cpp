@@ -1,4 +1,4 @@
-//Utility functions definitions for strings, comparing, uppercase, lowercase, and triming whitespace - Nathan Moody
+//utility.cpp: Utility functions definitions for strings, comparing, uppercase, lowercase, and triming whitespace - Nathan Moody
 #include <string>
 #include <cctype>
 #include "utility.h"
@@ -37,5 +37,27 @@ using namespace std;
     //checkEqual (checks if strings are equal {ignores case})
     bool checkEqual(const string& a, const string& b){
         return toLower(a) == toLower(b);
+    }
+    //End
+
+    //Splits a list (thingA|thingB|ThingC) into seperate strings [DELIM IS THE CHAR SEPERATING THE THINGS, FOR EXAMPLE '|' ]
+    vector<string> splitFields(const string& line, char delim){
+        vector<string> fields;
+        string current;
+
+        //Split on each delim
+        for(size_t i=0; i<line.length();i++){
+            if(line[i]==delim){
+                fields.push_back(trim(current));
+                current.clear();
+            }
+            else{
+                current += line[i];
+            }
+        }
+        //End
+
+        fields.push_back(trim(current));
+        return fields;
     }
     //End

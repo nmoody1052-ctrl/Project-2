@@ -1,4 +1,4 @@
-//Declaration for functions that load from files - Nathan Moody
+//Loaders.h: Declaration for functions that load from files - Nathan Moody
 #ifndef LOADERS_H
 #define LOADERS_H
 

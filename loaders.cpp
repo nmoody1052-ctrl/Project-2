@@ -1,4 +1,4 @@
-//Functions that load from file
+//Loaders.cpp: Functions that load from file - Nathan Moody
 #include <iostream>
 #include <vector>
 #include "utility.h"

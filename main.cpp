@@ -1,4 +1,4 @@
-//Main, makes everything actually work - Nathan Moody, Mahamat 
+//Main.cpp: makes everything actually work - Nathan Moody, Mahamat 
 //Include
 #include <iostream>
 #include <fstream>
