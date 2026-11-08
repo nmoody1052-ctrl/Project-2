@@ -1,22 +1,12 @@
 // DepartmentTree.cpp - Department general tree implementation
 #include "DepartmentTree.h"
-#include "utility.h"
+#include "FileUtil.h"
 #include <fstream>
 #include <iostream>
 #include <queue>
 using namespace std;
 
 namespace {
-vector<string> splitPipe(const string& line) {
-    vector<string> fields;
-    string cur;
-    for (size_t i = 0; i < line.size(); i++) {
-        if (line[i] == '|') { fields.push_back(trim(cur)); cur.clear(); }
-        else cur += line[i];
-    }
-    fields.push_back(trim(cur));
-    return fields;
-}
 void printSequence(const vector<string>& seq) {
     for (size_t i = 0; i < seq.size(); i++) {
         if (i > 0) cout << ", ";
@@ -39,10 +29,8 @@ bool DepartmentTree::isEmpty() const { return root == 0; }
 int DepartmentTree::size() const { return static_cast<int>(all.size()); }
 
 DeptNode* DepartmentTree::findNode(const string& name) const {
-    string key = trim(name);
-    for (size_t i = 0; i < all.size(); i++)
-        if (checkEqual(all[i]->name, key)) return all[i];
-    return 0;
+    unordered_map<string, DeptNode*>::const_iterator it = lookup.find(toLower(trim(name)));
+    return it == lookup.end() ? 0 : it->second;
 }
 
 bool DepartmentTree::addDepartment(const string& name, const string& parentName, string& errorMsg) {
@@ -52,14 +40,17 @@ bool DepartmentTree::addDepartment(const string& name, const string& parentName,
     if (root == 0) {                                     // empty tree: becomes root
         root = new DeptNode(n);
         all.push_back(root);
+        lookup[toLower(n)] = root;
         return true;
     }
     DeptNode* p = findNode(parentName);
     if (!p) { errorMsg = "Parent department '" + trim(parentName) + "' does not exist."; return false; }
     DeptNode* child = new DeptNode(n);
     child->parent = p;
+    child->depth = p->depth + 1;
     p->children.push_back(child);
     all.push_back(child);
+    lookup[toLower(n)] = child;
     return true;
 }
 
@@ -70,8 +61,9 @@ int DepartmentTree::loadFromFile(const string& filename) {
     int lineNo = 0, added = 0;
     while (getline(in, line)) {
         lineNo++;
+        if (lineNo == 1) line = stripBom(line);
         line = trim(line);
-        if (line.empty() || line[0] == '#') continue;
+        if (isSkippable(line)) continue;
         vector<string> f = splitPipe(line);
         if (f.size() != 2 || f[0].empty() || f[1].empty()) {
             cout << "Warning (" << filename << " line " << lineNo << "): malformed line skipped.\n";
@@ -98,21 +90,6 @@ int DepartmentTree::loadFromFile(const string& filename) {
     return added;
 }
 
-int DepartmentTree::depthOf(const DeptNode* n) {
-    int d = 0;
-    while (n->parent) { d++; n = n->parent; }
-    return d;
-}
-
-int DepartmentTree::heightOf(const DeptNode* n) {       // leaf = 0
-    int h = 0;
-    for (size_t i = 0; i < n->children.size(); i++) {
-        int ch = 1 + heightOf(n->children[i]);
-        if (ch > h) h = ch;
-    }
-    return h;
-}
-
 void DepartmentTree::preorderRec(const DeptNode* n, vector<string>& out) {
     out.push_back(n->name);
     for (size_t i = 0; i < n->children.size(); i++) preorderRec(n->children[i], out);
@@ -135,7 +112,7 @@ void DepartmentTree::searchDepartment(const string& name) const {
     cout << "Department: " << n->name << "\n";
     cout << "Parent: " << (n->parent ? n->parent->name : string("None")) << "\n";
     cout << "Direct children: " << n->children.size() << "\n";
-    cout << "Depth: " << depthOf(n) << "\n";
+    cout << "Depth: " << n->depth << "\n";
 }
 
 void DepartmentTree::displayHierarchy() const {
@@ -184,7 +161,10 @@ void DepartmentTree::displayStatistics() const {
         if (all[i]->children.empty()) leaves++;
     cout << "Total departments: " << all.size() << "\n";
     cout << "Leaves: " << leaves << "\n";
-    cout << "Height: " << heightOf(root) << "\n";
+    int height = 0;
+    for (size_t i = 0; i < all.size(); i++)
+        if (all[i]->depth > height) height = all[i]->depth;
+    cout << "Height: " << height << "\n";
 }
 
 void promptAddDepartment(DepartmentTree& t) {
