@@ -5,12 +5,14 @@
 #define DEPARTMENTTREE_H
 #include <string>
 #include <vector>
+#include <unordered_map>
 
 struct DeptNode {
     std::string name;
     DeptNode* parent;                    // nullptr for the root
+    int depth;                           // root = 0
     std::vector<DeptNode*> children;     // insertion order
-    explicit DeptNode(const std::string& n) : name(n), parent(0) {}
+    explicit DeptNode(const std::string& n) : name(n), parent(0), depth(0) {}
 };
 
 class DepartmentTree {
@@ -44,11 +46,10 @@ public:
 
 private:
     DeptNode* root;
-    std::vector<DeptNode*> all;          // every node in insertion order (for lookup)
+    std::vector<DeptNode*> all;          // every node in insertion order
+    std::unordered_map<std::string, DeptNode*> lookup;   // lowercase(trimmed name) -> node (O(1) search)
 
     DeptNode* findNode(const std::string& name) const;
-    static int depthOf(const DeptNode* n);
-    static int heightOf(const DeptNode* n);
     static void preorderRec(const DeptNode* n, std::vector<std::string>& out);
     static void postorderRec(const DeptNode* n, std::vector<std::string>& out);
     static void hierarchyRec(const DeptNode* n, int depth);
