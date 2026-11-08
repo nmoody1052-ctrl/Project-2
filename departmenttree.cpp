@@ -1,4 +1,4 @@
-// DepartmentTree.cpp - Department general tree implementation
+// departmentTree.cpp Department general tree implementation //
 #include "DepartmentTree.h"
 #include "FileUtil.h"
 #include <fstream>
