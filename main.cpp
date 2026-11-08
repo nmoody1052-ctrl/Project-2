@@ -3,15 +3,48 @@
 #include <iostream>
 #include <fstream>
 #include <vector>
-//End
-// main
-#include "CampusGraph.h"
-#include "DepartmentTree.h"
+
+#include "loaders.h"
+#include "facility.h"
+#include"hashtable.h"
+#include "campusgraph(1).h"
+#include "departmenttree(1).h"
 #include "utility.h"
-#include <fstream>
-#include <iostream>
 using namespace std;
 
+//Prints Header
+void header(){
+        cout<<
+        "+-----------------------------------------------+\n"<<
+        "|        Computer Science and Engieering        |\n"<<
+        "|          CSCE 2110 - Data Structures          |\n"<<
+        "|                                               |\n"<<
+        "|                    Mahamat                    |\n"<<
+        "|              Nathan Moody NJM0184             |\n"<<
+        "+-----------------------------------------------+\n\n";
+}
+//End
+
+//Prints Menu
+void menu(){
+        cout<<
+        "*********************** Menu **********************\n"<<
+        "| 1. View all Facilities                           |\n"<<
+        "| 2. Search Facility by ID                         |\n"<<
+        "| 3. View Campus Graph                             |\n"<<
+        "| 4. Display Graph Counts and Degrees              |\n"<<
+        "| 5. Find Reachable Buildings (BFS                 |\n"<<
+        "| 6. Add Department                                |\n"<<
+        "| 7. Search Department                             |\n"<<
+        "| 8. Display Department Hierarchy                  |\n"<<
+        "| 9. Run Preorder Traversal                        |\n"<<
+        "| 10. Exit                                         |\n"<<
+        "***************************************************\n"<<
+        ">> ";
+}
+//End
+
+// main
 int main() {
     CampusGraph g;
     // Stand-in for the teammate's building loader.
@@ -67,43 +100,3 @@ int main() {
     empty.displayStatistics();
     return 0;
 }
-
-
-//Including Headers
-#include "loaders.h"
-#include "utility.h"
-//End
-
-using namespace std;
-
-//Prints Header
-void header(){
-        cout<<
-        "+-----------------------------------------------+\n"<<
-        "|        Computer Science and Engieering        |\n"<<
-        "|          CSCE 2110 - Data Structures          |\n"<<
-        "|                                               |\n"<<
-        "|                    Mahamat                    |\n"<<
-        "|              Nathan Moody NJM0184             |\n"<<
-        "+-----------------------------------------------+\n\n";
-}
-//End
-
-//Prints Menu
-void menu(){
-        cout<<
-        "*********************** Menu **********************\n"<<
-        "| 1. View all Facilities                           |\n"<<
-        "| 2. Search Facility by ID                         |\n"<<
-        "| 3. View Campus Graph                             |\n"<<
-        "| 4. Display Graph Counts and Degrees              |\n"<<
-        "| 5. Find Reachable Buildings (BFS                 |\n"<<
-        "| 6. Add Department                                |\n"<<
-        "| 7. Search Department                             |\n"<<
-        "| 8. Display Department Hierarchy                  |\n"<<
-        "| 9. Run Preorder Traversal                        |\n"<<
-        "| 10. Exit                                         |\n"<<
-        "***************************************************\n"<<
-        ">> ";
-}
-//End
