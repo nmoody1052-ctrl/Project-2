@@ -1,4 +1,4 @@
-// CampusGraph.cpp - Campus graph implementation (adjacency list + hash lookup)
+// this is campus graph  codes // 
 #include "CampusGraph.h"
 #include "FileUtil.h"
 #include <fstream>
@@ -35,7 +35,7 @@ bool CampusGraph::addConnection(const string& a, const string& b) {
     int ia = findIndex(a), ib = findIndex(b);
     if (ia == -1 || ib == -1 || ia == ib) return false;
     for (size_t i = 0; i < adj[ia].size(); i++)
-        if (adj[ia][i] == ib) return false;          // duplicate (either direction)
+        if (adj[ia][i] == ib) return false;         
     adj[ia].push_back(ib);
     adj[ib].push_back(ia);
     edgeCount++;
@@ -94,8 +94,6 @@ void CampusGraph::displayStatistics() const {
         cout << "  " << names[i] << ": " << adj[i].size() << "\n";
 }
 
-// One BFS used by reachability, shortest path and the connectivity report (GRAPH-5).
-// A vertex is marked visited (dist set) when it is ENQUEUED (BFS-1).
 void CampusGraph::runBfs(int start, vector<int>& dist, vector<int>& prev, vector<int>& order) const {
     queue<int> q;
     dist[start] = 0;
