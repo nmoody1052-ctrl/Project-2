@@ -1,17 +1,11 @@
-Current Responsibilities:
-Nat M: data + hash side
+We’re building a C++ program that helps users find places on campus. It reads four text files that contain information about buildings, walkways, facilities, and departments.
 
-Shared utilities first (trim incl. \r, uppercase/lowercase, comment check), since you both need them
-buildings.txt and facilities.txt loaders
-Facility class, custom hash table, ID search, view all facilities
-Collision test data in testdata/ and the collision diagnostic
-main.cpp and the menu (input recovery, blank names)
-Hash section of the design doc
+A custom hash table; finds a facility by its ID, such as F004.
 
-Mahammat: graph + tree side
+A graph; shows which buildings are connected. Breadth-first search (BFS) finds the buildings you can reach from a starting point.
 
-connections.txt and departments.txt loaders
-Campus graph (display, counts/degrees)
-BFS reachability
-Department tree (add, search, hierarchy, preorder)
-Graph/tree sections of the design doc
+A tree; shows how colleges and departments are organized.
+
+The final version adds shortest walking routes, searches by facility name or category, and summary reports.
+
+
