@@ -1,0 +1,79 @@
+Description
+    Input 
+    Expected 
+    Actual 
+    Pass/Fail:
+—--------------------------------------------------
+Valid load
+    ./campus
+    7 buildings 10 facilities accepted
+    7 buildings 10 facilities accepted
+    Pass
+Bad facility records
+    ./campus testdata/badfacilities
+    2 accepted, 6 rejected, line-numbered warnings
+    2 accepted, 6 rejected, warnings
+    Pass
+Case-only duplicate building
+    ./campus testdata/badfacilities
+    "library" rejected (line 2)
+    "library" rejected for being duplicate
+    Pass
+ Duplicate facility ID
+    ./campus testdata/badfacilities
+    f001 rejected 
+    Duplicate ID F001
+    Pass
+Unknown building in facilities
+    ./campus testdata/badfacilities
+    F005 rejected
+    unknown building "Observatory"
+    Pass
+Missing file
+    cp -r data /tmp/nofac
+    rm /tmp/nofac/facilities.txt
+    ./campus /tmp/nofac
+
+    Error naming facilities.txt, 0 accepted, no crash
+    Treating as empty, 0 accepted
+    Pass
+Search valid ID
+    ./campus, menu 2, F004
+    Found: Computer Lab A | Science Building | Computer Lab
+    Found: Computer Lab A | Science Building | Computer Lab
+    Pass
+Search lowercase ID
+    ./campus, menu 2, f004
+    Same result as F004
+    Found: Computer Lab A | Science Building | Computer Lab
+    Pass
+Invalid ID format
+    ./campus, menu 2, 004
+    Invalid format message (F plus exactly three digits)
+    Invalid format: an ID is F followed by exactly three digits.
+    Pass
+ID not found
+    ./campus, menu 2, F999
+    Not found, shows F999
+    Not found: no facility with ID F999
+    Pass
+Hash collision
+    ./campus testdata/collision
+    3 accepted, 1 rejected, capacity 11, collisions 2
+    3 accepted, 1 rejected (hash capacity 11, entries 3, collisions 2)
+    Pass
+Duplicate key attempt
+    ./campus testdata/collision (line f013 is the duplicate)
+    f013 rejected, collisions still 2
+    duplicate ID F013
+    Pass
+Invalid menu input
+    ./campus, then abc, blank line, 42, -1
+    Error each time, menu returns
+    Space or blank input functions as 1
+    FAIL (NOW FIXED!)
+Repeat operations after errors
+    ./campus, enter bad input, then menu 1
+    Facilities list displays normally
+    Facilities list displays normally
+    Pass

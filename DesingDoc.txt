@@ -1,0 +1,25 @@
+DESIGN DOCUMENT - Milestone 1
+
+HASH TABLE (facilities, keyed by ID)
+Hash function: for each character c of the uppercase ID,
+hash = hash * 31 + c , then index = hash % capacity.
+std::hash is not used.
+
+Collision strategy: separate chaining. Each bucket is a vector of facilities.
+Chosen because chains can grow, so there is no fixed limit on facilities.
+
+Collision counting: one collision is counted when an ACCEPTED insertion goes
+into a bucket that already holds at least one entry. Rejected duplicate IDs
+do not change the count.
+
+Capacity: 11, it is prime to spread keys, and small so collisions are easy to
+demonstrate. With chaining the table never becomes full, so no insertion is
+rejected for lack of space.
+
+MAIN CLASSES AND MODULES
+Facility - one facility record (id, name, building, category).
+HashTable - custom hash table for ID lookup.
+utility - string helpers (trim, case, split, ID check) and console input.
+loaders - reads and validates the four data files.
+facilityops - menu operations for facilities.
+main.cpp - picks the data directory, loads files, runs the menu.

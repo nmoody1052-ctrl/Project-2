@@ -1,0 +1,9 @@
+# test file
+F001|Main Room|Library|Library
+F002|Too Few|Library
+F003|Too Many|Library|Library|Extra
+F004||Library|Library
+004|Bad ID|Library|Library
+F005|Unknown Bldg|Observatory|Library
+f001|Dup Lowercase|library|Library
+F006|Lowercase Bldg|gym|Recreation
