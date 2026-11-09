@@ -1,0 +1,8 @@
+campus
+*.o
+*.exe
+.vscode/
+.idea/
+*.swp
+.DS_Store
+

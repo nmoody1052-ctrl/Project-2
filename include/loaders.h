@@ -2,6 +2,8 @@
 #ifndef LOADERS_H
 #define LOADERS_H
 
+#include "facility.h"
+#include "hashtable.h"
 #include <string>
 #include <vector>
 

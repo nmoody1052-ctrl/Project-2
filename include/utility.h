@@ -1,4 +1,5 @@
 //Utility.h: Utility functions declarations for strings, comparing, uppercase, lowercase, and triming whitespace - Nathan Moody
+//Now includes all general utility functions (Like reading menu options) so there aren't a bajillion extra .h files!
 #ifndef UTILITY_H
 #define UTILITY_H
 #include <string>
@@ -22,6 +23,18 @@ bool checkEqual(const std::string& a, const std::string& b);
 
 //Splits a list (thingA|thingB|ThingC) into seperate strings
 std::vector<std::string> splitFields(const std::string& line, char delim);
+//End
+
+//checks if facility ID is valid
+bool isValidFacilityId(const std::string& id);
+//End
+
+//Shows input prompt, reads a whole line, returns it trimmed
+std::string promptLine(const std::string& prompt);
+//End
+
+//Reads Menu Chouce
+int readMenuChoice(int maxChoice);
 //End
 
 #endif
