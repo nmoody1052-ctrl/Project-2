@@ -24,6 +24,7 @@ void loadBuildings(vector<string>& b, const string& file) {
         cout << file << ": " << numAccepted << " accepted, " << numRejected << " rejected\n\n";
         return;
     }
+    //End
 
     while (getline(buildingFile, line)) {
         lineNum++;
@@ -33,6 +34,7 @@ void loadBuildings(vector<string>& b, const string& file) {
         if (line.empty() || line[0] == '#') {
             continue;
         }
+        //End
 
         // Check for a duplicate (ignoring case)
         bool duplicate = false;
@@ -42,6 +44,7 @@ void loadBuildings(vector<string>& b, const string& file) {
                 break;
             }
         }
+        //End
 
         if (duplicate) {
             cerr << "Warning: " << file << " line " << lineNum
